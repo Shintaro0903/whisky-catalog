@@ -1,0 +1,9 @@
+{
+  "name": "展示会2026 商品カタログ",
+  "short_name": "商品カタログ",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FBF8F1",
+  "theme_color": "#B8860B",
+  "icons": []
+}
