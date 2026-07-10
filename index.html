@@ -333,6 +333,10 @@ main{ padding: 6px 16px 30px; max-width: 720px; margin:0 auto; }
   width:100%; height:calc(100vh - 220px); min-height:500px; border:none; border-radius:14px;
   background:#F5F4F1;
 }
+body.map-active .map-frame{
+  height:calc(100vh - 150px);
+}
+body.map-active header{ padding-bottom:0; }
 </style>
 </head>
 <body>
@@ -349,14 +353,14 @@ main{ padding: 6px 16px 30px; max-width: 720px; margin:0 auto; }
     <span class="caution-entry-mark">!</span>
     初めに注意事項をご確認ください
   </button>
-  <div class="id-register-box">
+  <div class="id-register-box" id="idRegisterBox">
     <div class="id-register-note"><b>会場内で見積もりを依頼するには、事前にIDの発行（フォーム入力）が必要です。</b>下記より該当するボタンを押して、フォームにご入力ください。</div>
     <div class="id-register-btns">
       <a class="id-register-btn" href="https://forms.office.com/r/pVQUULkXYF?origin=lprLink" target="_blank" rel="noopener">🍽 飲食店の方</a>
       <a class="id-register-btn" href="https://forms.office.com/r/aquGLPfyrB?origin=lprLink" target="_blank" rel="noopener">👤 一般の方</a>
     </div>
   </div>
-  <div class="search-wrap">
+  <div class="search-wrap" id="searchWrap">
     <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#6B5D4C" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="#6B5D4C" stroke-width="2" stroke-linecap="round"/></svg>
     <input id="searchInput" type="text" placeholder="商品名・メーカー・出展社で検索" autocomplete="off">
     <button class="search-clear" id="clearBtn">×</button>
@@ -526,6 +530,11 @@ function groupedProductGridHtml(list, opts){
 function render(){
   renderChips();
   const main = document.getElementById('main');
+  const isMap = currentView === 'map';
+  document.getElementById('cautionEntryBtn').style.display = isMap ? 'none' : '';
+  document.getElementById('idRegisterBox').style.display = isMap ? 'none' : '';
+  document.getElementById('searchWrap').style.display = isMap ? 'none' : '';
+  document.body.classList.toggle('map-active', isMap);
 
   if(currentView === 'companies' && !currentCompany){
     let list = COMPANIES;
@@ -570,7 +579,7 @@ function render(){
   }
 
   if(currentView === 'map'){
-    main.innerHTML = `<iframe src="map.html" class="map-frame" title="会場マップ"></iframe>`;
+    main.innerHTML = `<iframe src="map.html?embed=1" class="map-frame" title="会場マップ"></iframe>`;
     return;
   }
 
